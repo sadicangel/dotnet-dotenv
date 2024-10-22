@@ -1,2 +1,5 @@
 # dotnet-dotenv
-Reading and writing .env files in .NET
+
+A lightweight .NET utility designed to read and write `.env` configuration files.
+
+Supports advanced interpolation features such as direct substitution and fallback mechanisms with default values.
