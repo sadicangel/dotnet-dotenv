@@ -11,15 +11,21 @@ public sealed record class DotEnv : IReadOnlyDictionary<string, string>
 
     public DotEnv(int capacity) => _values = new(capacity);
 
-    public DotEnv(IEnumerable<KeyValuePair<string, string>> collection) => _values = new(collection);
+    public DotEnv(IEnumerable<KeyValuePair<string, string>> collection)
+    {
+        _values = collection.TryGetNonEnumeratedCount(out var count) ? new(count) : new();
+        foreach (var (key, value) in collection)
+            this[key] = value;
+    }
 
     public string this[string key]
     {
         get => _values[key];
         init
         {
-            Variable.ThrowIfInvalidKey(value);
+            Variable.ThrowIfInvalidKey(key);
             _values[key] = value;
+            Environment.SetEnvironmentVariable(key, value);
         }
     }
 
