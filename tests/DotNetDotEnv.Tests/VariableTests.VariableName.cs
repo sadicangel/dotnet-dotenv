@@ -1,16 +1,16 @@
 ﻿namespace DotNetDotEnv.Tests;
 
-public partial class VariableNameTests
+public partial class VariableTests
 {
     [Theory]
     [MemberData(nameof(ValidVariableNames))]
     public void Allow_when_value_is(string value) =>
-        Assert.Equal(value, VariableName.ThrowIfInvalid(value));
+        Assert.Null(Record.Exception(() => Variable.ThrowIfInvalidKey(value)));
 
     [Theory]
     [MemberData(nameof(InvalidVariableNames))]
     public void Throw_when_value_is(string value) =>
-        Assert.Throws<ArgumentOutOfRangeException>(() => VariableName.ThrowIfInvalid(value));
+        Assert.Throws<ArgumentOutOfRangeException>(() => Variable.ThrowIfInvalidKey(value));
 
     public static TheoryData<string> ValidVariableNames() => [
         "DATABASE",

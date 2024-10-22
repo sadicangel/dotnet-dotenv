@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Diagnostics.CodeAnalysis;
-using System.Text.RegularExpressions;
 
 namespace DotNetDotEnv;
 
@@ -10,7 +9,19 @@ public sealed record class DotEnv : IReadOnlyDictionary<string, string>
 
     public DotEnv() => _values = [];
 
-    public string this[string key] { get => _values[key]; init => _values[key] = VariableName.ThrowIfInvalid(value); }
+    public DotEnv(int capacity) => _values = new(capacity);
+
+    public DotEnv(IEnumerable<KeyValuePair<string, string>> collection) => _values = new(collection);
+
+    public string this[string key]
+    {
+        get => _values[key];
+        init
+        {
+            Variable.ThrowIfInvalidKey(value);
+            _values[key] = value;
+        }
+    }
 
     IEnumerable<string> IReadOnlyDictionary<string, string>.Keys => _values.Keys;
     IEnumerable<string> IReadOnlyDictionary<string, string>.Values => _values.Values;
@@ -23,24 +34,10 @@ public sealed record class DotEnv : IReadOnlyDictionary<string, string>
     IEnumerator IEnumerable.GetEnumerator() => ((IEnumerable)_values).GetEnumerator();
 
     public bool TryGetValue(string key, [MaybeNullWhen(false)] out string value) => _values.TryGetValue(key, out value);
-}
 
-internal static partial class VariableName
-{
-    [GeneratedRegex(@"^[a-zA-Z_]+[a-zA-Z0-9_]*$")]
-    private static partial Regex GetOrCreateVariableNameRegex();
+    public override string ToString() => string.Join(Environment.NewLine, _values.Select(e => $"{e.Key}=\"{e.Value}\""));
 
-    public static string ThrowIfInvalid(string value)
-    {
-        var regex = GetOrCreateVariableNameRegex();
-        if (!regex.IsMatch(value))
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(value),
-                value,
-                $"Invalid variable name. Must match the following regex pattern: {regex}");
-        }
+    public static DotEnv Load(string fileName) => Parser.Parse(File.ReadAllText(fileName));
 
-        return value;
-    }
+    public void Save(string fileName) => File.WriteAllText(fileName, ToString());
 }
