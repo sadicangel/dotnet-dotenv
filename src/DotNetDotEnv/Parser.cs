@@ -4,7 +4,7 @@ namespace DotNetDotEnv;
 
 internal static class Parser
 {
-    public static DotEnv Parse(ReadOnlySpan<char> input)
+    public static Dictionary<string, string> Parse(ReadOnlySpan<char> input)
     {
         var ignoreInvalidLines = true;
 
@@ -147,6 +147,6 @@ internal static class Parser
             keyValuePairs[key] = value;
         }
 
-        return new DotEnv(keyValuePairs);
+        return keyValuePairs;
     }
 }
