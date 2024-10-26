@@ -1,7 +1,7 @@
-﻿#pragma warning disable IDE0130 // Namespace does not match folder structure
-using DotNetDotEnv.AspNetCore;
+﻿using DotNetDotEnv.AspNetCore;
 using Microsoft.Extensions.FileProviders;
 
+#pragma warning disable IDE0130 // Namespace does not match folder structure
 namespace Microsoft.Extensions.Configuration;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
@@ -61,7 +61,6 @@ public static class DotNetDotEnvConfigurationExtensions
             s.Path = path;
             s.Optional = optional;
             s.ReloadOnChange = reloadOnChange;
-            // TODO: This needs to create a provider that accepts dot prefixed files.
             s.ResolveFileProvider();
         });
     }
