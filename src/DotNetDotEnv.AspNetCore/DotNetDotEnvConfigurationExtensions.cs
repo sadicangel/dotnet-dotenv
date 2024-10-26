@@ -5,6 +5,9 @@ using Microsoft.Extensions.FileProviders;
 namespace Microsoft.Extensions.Configuration;
 #pragma warning restore IDE0130 // Namespace does not match folder structure
 
+/// <summary>
+/// Extension methods for adding <see cref="DotEnvConfigurationProvider"/>.
+/// </summary>
 public static class DotNetDotEnvConfigurationExtensions
 {
     /// <summary>

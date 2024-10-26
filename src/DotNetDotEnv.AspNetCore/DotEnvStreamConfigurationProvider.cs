@@ -12,5 +12,5 @@ public sealed class DotEnvStreamConfigurationProvider(DotEnvStreamConfigurationS
     /// Loads .env configuration key-value pairs from a stream into a provider.
     /// </summary>
     /// <param name="stream">The .env <see cref="Stream"/> to load configuration data from.</param>
-    public override void Load(Stream stream) => Data = DotEnv.Read(stream)!;
+    public override void Load(Stream stream) => Data = DotEnv.Load(stream)!;
 }

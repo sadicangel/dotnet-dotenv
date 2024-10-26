@@ -15,5 +15,5 @@ public class DotEnvConfigurationProvider(DotEnvConfigurationSource source) : Fil
     /// Loads the .env data from a stream.
     /// </summary>
     /// <param name="stream">The stream to read.</param>
-    public override void Load(Stream stream) => Data = DotEnv.Read(stream)!;
+    public override void Load(Stream stream) => Data = DotEnv.Load(stream)!;
 }

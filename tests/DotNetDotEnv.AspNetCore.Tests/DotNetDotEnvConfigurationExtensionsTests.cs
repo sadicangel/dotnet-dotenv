@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace DotNetDotEnv.AspNetCore.Tests;
 
-public class UnitTest1
+public class DotNetDotEnvConfigurationExtensionsTests
 {
     [Fact]
     public async Task Load_DotEnv_variables_from_default_path()

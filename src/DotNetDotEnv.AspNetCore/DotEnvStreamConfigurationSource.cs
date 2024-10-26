@@ -8,10 +8,10 @@ namespace DotNetDotEnv.AspNetCore;
 public sealed class DotEnvStreamConfigurationSource : StreamConfigurationSource
 {
     /// <summary>
-    /// Builds the <see cref="JsonStreamConfigurationProvider"/> for this source.
+    /// Builds the <see cref="DotEnvStreamConfigurationProvider"/> for this source.
     /// </summary>
     /// <param name="builder">The <see cref="IConfigurationBuilder"/>.</param>
-    /// <returns>An <see cref="JsonStreamConfigurationProvider"/></returns>
+    /// <returns>An <see cref="DotEnvStreamConfigurationProvider"/></returns>
     public override IConfigurationProvider Build(IConfigurationBuilder builder) =>
         new DotEnvStreamConfigurationProvider(this);
 }

@@ -4,12 +4,12 @@ public partial class VariableTests
 {
     [Theory]
     [MemberData(nameof(ValidVariableNames))]
-    public void Allow_when_value_is(string value) =>
+    public void ThrowIfInvalidKey_does_not_throw_for(string value) =>
         Assert.Null(Record.Exception(() => Variable.ThrowIfInvalidKey(value)));
 
     [Theory]
     [MemberData(nameof(InvalidVariableNames))]
-    public void Throw_when_value_is(string value) =>
+    public void ThrowIfInvalidKey_throws_for(string value) =>
         Assert.Throws<ArgumentOutOfRangeException>(() => Variable.ThrowIfInvalidKey(value));
 
     public static TheoryData<string> ValidVariableNames() => [
