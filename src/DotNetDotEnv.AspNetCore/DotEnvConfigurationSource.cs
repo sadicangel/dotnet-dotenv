@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders.Physical;
 
 namespace DotNetDotEnv.AspNetCore;
 
@@ -14,7 +16,12 @@ public class DotEnvConfigurationSource : FileConfigurationSource
     /// <returns>A <see cref="DotEnvConfigurationProvider"/> instance.</returns>
     public override IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        EnsureDefaults(builder);
+        // Need a new file provider that loads dot prefixed files.
+        FileProvider = new PhysicalFileProvider(
+            root: AppContext.BaseDirectory ?? string.Empty,
+            filters: ExclusionFilters.Sensitive ^ ExclusionFilters.DotPrefixed);
+        OnLoadException ??= builder.GetFileLoadExceptionHandler();
+
         return new DotEnvConfigurationProvider(this);
     }
 }

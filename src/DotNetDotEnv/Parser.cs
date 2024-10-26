@@ -124,7 +124,8 @@ internal static class Parser
                             var defaultIfEmpty = match.Groups["defaultColon"].Value;
                             var defaultIfNull = match.Groups["defaultDash"].Value;
 
-                            var result = keyValuePairs.GetValueOrDefault(variable) ?? Environment.GetEnvironmentVariable(variable);
+                            var result = keyValuePairs.GetValueOrDefault(variable)
+                                ?? Environment.GetEnvironmentVariable(variable);
                             return result switch
                             {
                                 "" or null when !string.IsNullOrEmpty(defaultIfEmpty) => defaultIfEmpty,
@@ -139,7 +140,8 @@ internal static class Parser
                     if (i >= 0)
                     {
                         var variable = value[(i + 1)..].ToString();
-                        value = $"{value[..i]}{keyValuePairs.GetValueOrDefault(variable) ?? Environment.GetEnvironmentVariable(variable)}";
+                        value = $"{value[..i]}{keyValuePairs.GetValueOrDefault(variable)
+                            ?? Environment.GetEnvironmentVariable(variable)}";
                     }
                 }
             }
