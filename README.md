@@ -1,5 +1,6 @@
 # dotnet-dotenv
 
+<img src=icon.png width=128></img>  
 A lightweight .NET utility designed to read and write `.env` configuration files.
 
 Supports advanced interpolation features such as direct substitution and fallback mechanisms with default values.
@@ -97,7 +98,7 @@ You can customize the file path and whether the file is optional, as well as con
 
 ```cs
 // Load the default .env file
-builder.AddDotEnvFile();
+builder.Configuration.AddDotEnvFile();
 // Load an optional .env file
-builder.AddDotEnvFile("path/to/.env", optional: true);
+builder.Configuration.AddDotEnvFile("path/to/.env", optional: true);
 ```
