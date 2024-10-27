@@ -16,10 +16,10 @@ public class DotEnvConfigurationSource : FileConfigurationSource
     /// <returns>A <see cref="DotEnvConfigurationProvider"/> instance.</returns>
     public override IConfigurationProvider Build(IConfigurationBuilder builder)
     {
-        // Need a new file provider that loads dot prefixed files.
+        // Need a new file provider that loads dot prefixed and hidden files.
         FileProvider = new PhysicalFileProvider(
             root: AppContext.BaseDirectory ?? string.Empty,
-            filters: ExclusionFilters.Sensitive ^ ExclusionFilters.DotPrefixed);
+            filters: ExclusionFilters.System);
         OnLoadException ??= builder.GetFileLoadExceptionHandler();
 
         return new DotEnvConfigurationProvider(this);
