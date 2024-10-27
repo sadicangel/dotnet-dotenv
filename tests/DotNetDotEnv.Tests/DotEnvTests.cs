@@ -23,8 +23,7 @@ public class DotEnvTests
     public void LoadAndApply_from_file_creates_valid_DotEnv_instance_and_applies_to_environment()
     {
         var dotEnv = DotEnv.LoadAndApply("Data/.env");
-
-        using var variables = EnvironmentVariableDisposer.Create(dotEnv);
+        using var environment = new TempEnvironment(dotEnv);
 
         Assert.Equal("Value1", Environment.GetEnvironmentVariable("Key1"));
     }
@@ -34,8 +33,7 @@ public class DotEnvTests
     {
         using var stream = File.OpenRead("Data/.env");
         var dotEnv = DotEnv.LoadAndApply(stream);
-
-        using var variables = EnvironmentVariableDisposer.Create(dotEnv);
+        using var environment = new TempEnvironment(dotEnv);
 
         Assert.Equal("Value1", Environment.GetEnvironmentVariable("Key1"));
     }
@@ -49,7 +47,7 @@ public class DotEnvTests
         };
         dotEnv.ApplyToEnvironment();
 
-        using var variables = EnvironmentVariableDisposer.Create(dotEnv);
+        using var environment = new TempEnvironment(dotEnv);
 
         Assert.Equal("Value", Environment.GetEnvironmentVariable("Key"));
     }
@@ -57,7 +55,7 @@ public class DotEnvTests
     [Fact]
     public void ApplyToEnvironment_overwrites_existing_values()
     {
-        using var variables = EnvironmentVariableDisposer.CreateAndApply([new KeyValuePair<string, string>("Key", "SomethingElse")]);
+        using var environment = new TempEnvironment([new KeyValuePair<string, string>("Key", "SomethingElse")]);
         var dotEnv = new DotEnv
         {
             ["Key"] = "Value"

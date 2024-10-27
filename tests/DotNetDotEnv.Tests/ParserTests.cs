@@ -151,7 +151,7 @@ public class ParserTests
     [Fact]
     public void Parse_parses_unbraced_interpolated_value_from_environment_variable()
     {
-        using var variables = EnvironmentVariableDisposer.CreateAndApply([new KeyValuePair<string, string>("Key1", "Value")]);
+        using var environment = new TempEnvironment([new KeyValuePair<string, string>("Key1", "Value")]);
         var env = Parser.Parse("""
             Key2=$Key1
             """);
@@ -173,7 +173,7 @@ public class ParserTests
     [Fact]
     public void Parse_parses_braced_interpolated_value_from_environment_variable()
     {
-        using var variables = EnvironmentVariableDisposer.CreateAndApply([new KeyValuePair<string, string>("Key1", "Value")]);
+        using var environment = new TempEnvironment([new KeyValuePair<string, string>("Key1", "Value")]);
         var env = Parser.Parse("""
             Key2=${Key1}
             """);
